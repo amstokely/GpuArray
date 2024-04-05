@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
-project(GpuArray LANGUAGES CXX C Fortran)
+project(GpuArray LANGUAGES CXX C Fortran CUDA)
+
+FIND_PACKAGE(CUDA REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -8,6 +10,7 @@ set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/include)
 
 set(GPU_ARRAY_LIB_FORTRAN_SRC_FILES ${SRC_DIR}/GpuArray.f90)
 set(GPU_ARRAY_LIB_C_SRC_FILES ${SRC_DIR}/GpuArray.cpp)
+set(GPU_ARRAY_LIB_CUDA_SRC_FILES ${SRC_DIR}/GpuArray.cu)
 
 include_directories(${INCLUDE_DIR})
 
@@ -16,10 +19,18 @@ add_library(
         SHARED
         ${GPU_ARRAY_LIB_C_SRC_FILES}
 )
+add_library(
+	GpuArray_CUDALib
+        SHARED
+	${GPU_ARRAY_LIB_CUDA_SRC_FILES}
+)
+
 set_target_properties(
-        GpuArray_CLib
+	GpuArray_CUDALib
         PROPERTIES
-        LINKER_LANGUAGE CXX
+	CUDA_ARCHITECTURES OFF 
+	CUDA_SEPARABLE_COMPILATION ON
+
 )
 add_library(
         GpuArrayFortranLib
@@ -30,6 +41,11 @@ set_target_properties(
         GpuArrayFortranLib
         PROPERTIES
         LINKER_LANGUAGE Fortran
+)
+
+target_link_libraries(
+        GpuArray_CLib
+	GpuArray_CUDALib
 )
 
 target_link_libraries(

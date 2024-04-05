@@ -9,6 +9,7 @@
 extern "C" {
 struct GpuArray {
     float **data;
+    float *deviceData;
     int size;
 };
 void GpuArray_allocate(GpuArray *self, int *size);
@@ -20,6 +21,22 @@ void GpuArray_set(GpuArray *self, int *index, float *value);
 float GpuArray_get(GpuArray *self, int *index);
 
 int GpuArray_size(GpuArray *self);
+
+void GpuArray_allocateDevice_Cuda(GpuArray *self);
+
+void GpuArray_allocateDevice(GpuArray *self);
+
+void GpuArray_deallocateDevice_Cuda(GpuArray *self);
+
+void GpuArray_deallocateDevice(GpuArray *self);
+
+void GpuArray_toDevice_Cuda(GpuArray *self);
+
+void GpuArray_toDevice(GpuArray *self);
+
+void GpuArray_toHost_Cuda(GpuArray *self);
+
+void GpuArray_toHost(GpuArray *self);
 
 
 }

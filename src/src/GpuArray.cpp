@@ -31,3 +31,19 @@ int GpuArray_size(GpuArray *self) {
     return self->size;
 }
 
+void GpuArray_allocateDevice(GpuArray *self) {
+	GpuArray_allocateDevice_Cuda(self);
+}
+
+void GpuArray_deallocateDevice(GpuArray *self) {
+	GpuArray_deallocateDevice_Cuda(self);
+}
+
+void GpuArray_toDevice(GpuArray *self) {
+	GpuArray_toDevice_Cuda(self);
+}
+
+void GpuArray_toHost(GpuArray *self) {
+	GpuArray_toHost_Cuda(self);
+}
+
