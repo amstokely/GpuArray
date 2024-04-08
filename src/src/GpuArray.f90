@@ -58,6 +58,13 @@ module GpuArray_mod
             type(GpuArray), intent(in) :: self
             integer :: size
         end function GpuArray_size
+
+        function GpuArray_sumReduction(self) result(sum) bind(C, name = "GpuArray_sumReduction")
+            import :: GpuArray
+            type(GpuArray), intent(in) :: self
+            real :: value
+        end function GpuArray_sumReduction
+
     end interface
 
 end module GpuArray_mod

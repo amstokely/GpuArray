@@ -38,3 +38,7 @@ void GpuArray::allocateDevice() {
 void GpuArray::deallocateDevice() {
     GpuArray_deallocateDevice(this);
 }
+
+float GpuArray::sumReduction() {
+    return GpuArray_sumReduction(this);
+}

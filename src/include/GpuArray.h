@@ -33,6 +33,8 @@ struct GpuArray {
 
     void deallocateDevice();
 
+    float sumReduction();
+
 };
 
 void GpuArray_deallocateDevice_Cuda(GpuArray *self);
@@ -43,6 +45,8 @@ void GpuArray_toDevice_Cuda(GpuArray *self);
 
 void GpuArray_toHost_Cuda(GpuArray *self);
 
+float GpuArray_sumReduction_Cuda(GpuArray *self);
+
 void GpuArray_allocate(
         GpuArray *self,
         int *size
@@ -51,7 +55,7 @@ void GpuArray_allocate(
     self->data = new float *;
     *self->data = new float[*size];
     for (int i = 0; i < *size; i++) {
-        (*self->data)[i] = 0.0;
+        (*(self->data))[i] = 0.0;
     }
 }
 void GpuArray_deallocate(GpuArray *self) {
@@ -94,6 +98,9 @@ void GpuArray_toHost(GpuArray *self) {
     GpuArray_toHost_Cuda(self);
 }
 
+float GpuArray_sumReduction(GpuArray *self) {
+    return GpuArray_sumReduction_Cuda(self);
+}
 }
 
 #endif //GPUARRAY_GPUARRAY_C_H
